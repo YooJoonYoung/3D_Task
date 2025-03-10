@@ -24,10 +24,12 @@ public class PlayerController : MonoBehaviour
     private Rigidbody _rigidbody;
 
     private Animator animator;
+    private float originalJumpPower;
 
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody>();
+        originalJumpPower = jumpPower;
     }
 
     void Start()
@@ -130,5 +132,20 @@ public class PlayerController : MonoBehaviour
         bool toggle = Cursor.lockState == CursorLockMode.Locked;
         Cursor.lockState = toggle ? CursorLockMode.None : CursorLockMode.Locked;
         canLook = !toggle;
+    }
+    
+    public void SetJumpMultiplier(float multiplier) // 점프 배율 설정
+    {
+        jumpPower = originalJumpPower * multiplier;
+    }
+
+    
+    public void ResetJumpMultiplier() // 점프 배율 초기화
+    {
+        jumpPower = originalJumpPower;
+    }
+    public void ForceJump()
+    {
+        _rigidbody.AddForce(Vector2.up * jumpPower, ForceMode.Impulse);  // 강제로 점프
     }
 }
