@@ -8,20 +8,20 @@ public class JumpZone : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Player")) // Player 태그를 가진 오브젝트만 반응하도록 설정
+        if (collision.gameObject.CompareTag("Player")) // Player 태그 오브젝트만 반응
         {
             PlayerController playerController = collision.gameObject.GetComponent<PlayerController>(); // PlayerController 찾기
             if (playerController != null)
             {
                 playerController.SetJumpMultiplier(jumpMultiplier); // 점프 배율 설정
-                playerController.ForceJump();
+                playerController.ForceJump(); //강제점프
             }
         }
     }
 
     private void OnCollisionExit(Collision collision)
     {
-        // 플레이어가 JumpZone에서 나갈 때 점프 배율을 초기화
+        // 플레이어가 JumpZone에서 나갈 때 점프 배율 초기화
         if (collision.gameObject.CompareTag("Player"))
         {
             PlayerController playerController = collision.gameObject.GetComponent<PlayerController>();
