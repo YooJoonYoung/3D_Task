@@ -25,11 +25,13 @@ public class PlayerController : MonoBehaviour
 
     private Animator animator;
     private float originalJumpPower;
+    private float originalMoveSpeed;
 
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody>();
         originalJumpPower = jumpPower;
+        originalMoveSpeed = moveSpeed; 
     }
 
     void Start()
@@ -147,5 +149,17 @@ public class PlayerController : MonoBehaviour
     public void ForceJump()
     {
         _rigidbody.AddForce(Vector2.up * jumpPower, ForceMode.Impulse);  // 강제로 점프
+    }
+
+    public void SetSpeedMultiplier(float multiplier, float duration)
+    {
+        StartCoroutine(ChageSpeedForDuration(multiplier, duration));
+    }
+
+    private IEnumerator ChageSpeedForDuration(float multiplier, float duration)
+    {
+        moveSpeed = originalMoveSpeed * multiplier; ;
+        yield return new WaitForSeconds(duration);
+        moveSpeed = originalMoveSpeed;
     }
 }
